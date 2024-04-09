@@ -1,6 +1,14 @@
 import { axiosRequest } from "../helpers/axios";
 
-export async function getCategories() {
+export type Category = {
+  id: number;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export async function getCategories(): Promise<Category[]> {
   return await axiosRequest({
     url: "/category",
     method: "GET",
