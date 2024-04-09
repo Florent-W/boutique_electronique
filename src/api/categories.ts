@@ -1,7 +1,7 @@
 import { axiosRequest } from "../helpers/axios";
 
 export type Category = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   image: string;

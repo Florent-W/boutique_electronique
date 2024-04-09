@@ -1,4 +1,8 @@
-import { RiAccountCircleLine, RiShoppingCartLine } from "@remixicon/react";
+import {
+  RiAccountCircleLine,
+  RiAddFill,
+  RiShoppingCartLine,
+} from "@remixicon/react";
 import { Button } from "@tremor/react";
 import { Link } from "react-router-dom";
 import { useUser } from "../app/contexts/user.context";
@@ -12,7 +16,14 @@ export default function Navbar() {
         <Link to="/" className="text-2xl font-bold">
           <img src="/assets/brand/logo.svg" alt="logo" className="h-10" />
         </Link>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 w-full justify-end">
+          <Link
+            to="/add-product"
+            className="flex items-center gap-2 bg-primary px-4 py-2 rounded-xl text-white"
+          >
+            <RiAddFill size={25} />
+            <span className="inline-block text-sm">Vendre un produit</span>
+          </Link>
           <input
             type="text"
             placeholder="Rechercher un produit"

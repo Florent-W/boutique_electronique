@@ -7,6 +7,7 @@ import { useUser } from "../contexts/user.context";
 import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { getUser } from "../../api/users";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL as string,
@@ -17,28 +18,31 @@ export default function App() {
   const { user, updateUser } = useUser();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }: any) => {
+    supabase.auth.getSession().then(async ({ data: { session } }: any) => {
       if (!session) return;
+
+      const userinfo = await getUser(session?.user?.id);
+
       updateUser({
         token: session?.access_token,
         id: session?.user?.id,
         email: session?.user?.email,
-        role: session?.user?.role,
+        role: userinfo?.role || "user",
       });
     });
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session: any) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session: any) => {
       if (!session) return;
-      console.log("session -> ", session);
-      console.log("_event -> ", _event);
+
+      const userinfo = await getUser(session?.user?.id);
 
       updateUser({
         token: session?.access_token,
         id: session?.user?.id,
         email: session?.user?.email,
-        role: session?.user?.role,
+        role: userinfo?.role || "user",
       });
     });
 

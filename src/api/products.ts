@@ -1,9 +1,9 @@
 import { axiosRequest } from "../helpers/axios";
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
-  categoryId: number;
+  categoryId: string;
   description: string;
   price: number;
   userId: string;
@@ -16,5 +16,26 @@ export async function getProducts() {
   return await axiosRequest({
     url: "/product",
     method: "GET",
+  });
+}
+
+export async function createProduct(
+  data: {
+    name: string;
+    categoryId: string;
+    description: string;
+    price: number;
+    userId: string;
+    image: string;
+  },
+  token: string
+) {
+  return await axiosRequest({
+    url: "/product",
+    method: "POST",
+    data,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 }

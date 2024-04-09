@@ -34,6 +34,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
+    fetchCategories();
     fetchProducts();
   }, []);
   return (
@@ -58,7 +59,7 @@ export default function HomePage() {
       </div>
       {categories.map((category: Category) => {
         const productsByCategory = products.filter(
-          (product) => product.categoryId === category.id
+          (product) => product.categoryId == category.id
         );
 
         return (

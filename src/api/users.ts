@@ -6,3 +6,10 @@ export async function getUsers() {
     method: "GET",
   });
 }
+
+export async function getUser(id: string) {
+  return await axiosRequest({
+    url: "/user/" + id,
+    method: "GET",
+  });
+}
