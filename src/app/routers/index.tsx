@@ -31,6 +31,9 @@ export default function App() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session: any) => {
       if (!session) return;
+      console.log("session -> ", session);
+      console.log("_event -> ", _event);
+
       updateUser({
         token: session?.access_token,
         id: session?.user?.id,
