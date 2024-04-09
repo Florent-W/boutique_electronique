@@ -14,13 +14,13 @@ const cardData = [
     title: "Liste des commandes en cours",
     action: "Accès à la liste des commandes",
     icon: "ri-file-list-line",
-    link: "/users"
+    link: "/admin/commands"
   },
   {
     title: "Page de statistiques",
     action: "Accéder aux statistiques des ventes",
     icon: "ri-bar-chart-line",
-    link: "/users"
+    link: "/admin/statistics"
   },
 ];
 
