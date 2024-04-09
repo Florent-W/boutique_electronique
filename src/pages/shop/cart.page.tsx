@@ -1,4 +1,6 @@
 import React from 'react';
+import Navbar from '../../components/Navbar';
+import './cart.css';
 
 const CartPage: React.FC = () => {
   // Récupère le panier depuis le localStorage
@@ -11,25 +13,30 @@ const CartPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Cart</h1>
-      {Object.keys(cartItems).length === 0 ? (
-        <p>Your cart is empty</p>
-      ) : (
-        <div>
-          <ul>
-            {Object.keys(cartItems).map((itemId: string) => (
-              <li key={itemId}>
-                <h2>{cartItems[itemId].name}</h2>
-                <p>Description: {cartItems[itemId].description}</p>
-                <p>Price: {cartItems[itemId].price}</p>
-                <p>Quantity: {cartItems[itemId].quantity}</p>
-              </li>
-            ))}
-          </ul>
-          <p>Total: {total}</p> {/* Affiche le total */}
-        </div>
-      )}
+          <Navbar />
+
+
+<div className="cart-container">
+  {Object.keys(cartItems).length === 0 ? (
+    <p>Your cart is empty</p>
+  ) : (
+    <div>
+      <ul className="cart-items">
+        {Object.keys(cartItems).map((itemId: string) => (
+          <li key={itemId} className="cart-item">
+            <h2>{cartItems[itemId].name}</h2>
+            <p>Description: {cartItems[itemId].description}</p>
+            <p>Price: {cartItems[itemId].price}</p>
+            <p>Quantity: {cartItems[itemId].quantity}</p>
+          </li>
+        ))}
+      </ul>
+      <p className="total">Total: {total}</p> {/* Affiche le total */}
     </div>
+  )}
+</div>
+</div>
+
   );
 };
 
