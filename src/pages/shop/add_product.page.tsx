@@ -76,12 +76,14 @@ export default function AddProductPage() {
               placeholder="Nom de l'article"
               className="w-full text-lg p-3 border border-gray-300 rounded-lg mb-5 col-span-3"
               name="name"
+              required
             />
             <input
               type="number"
               placeholder="Prix de l'article"
               className="w-full text-lg p-3 border border-gray-300 rounded-lg mb-5"
               name="price"
+              required
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -90,12 +92,16 @@ export default function AddProductPage() {
               placeholder="Image de l'article"
               className="w-full text-lg p-3 border border-gray-300 rounded-lg mb-5"
               name="image"
+              required
             />
             <select
               className="w-full text-lg p-3 border border-gray-300 rounded-lg mb-5"
               name="category"
+              required
             >
-              <option value="">Catégorie</option>
+              <option value="" disabled selected>
+                Catégorie
+              </option>
               {categoties.map((category: Category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -108,6 +114,7 @@ export default function AddProductPage() {
             className="w-full p-3 border border-gray-300 rounded-lg mb-5 min-h-[200px]"
             placeholder="Description de l'article"
             name="description"
+            required
           />
 
           <button
