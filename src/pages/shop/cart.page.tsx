@@ -5,6 +5,7 @@ import formatPrice from "../../helpers/formatPrice";
 
 const CartPage: React.FC = () => {
   const [cartItems, setCartItems] = React.useState<any>([]);
+
   const getCartItems = () => {
     const cart = localStorage.getItem("cart");
     if (cart) {
@@ -27,6 +28,7 @@ const CartPage: React.FC = () => {
     <Layout>
       <div>
         <h2 className="text-3xl font-bold text-primary mb-10">Mon Panier</h2>
+
         {cartItems.length === 0 ? (
           <p>Votre panier est vide</p>
         ) : (
@@ -75,9 +77,12 @@ const CartPage: React.FC = () => {
             </div>
 
             <div className="flex justify-end">
-              <button className="bg-primary text-white text-lg  px-7 py-4 rounded-xl mt-10">
+              <Link
+                className="bg-primary text-white text-lg  px-7 py-4 rounded-xl mt-10"
+                to="/checkout"
+              >
                 Commander
-              </button>
+              </Link>
             </div>
           </div>
         )}

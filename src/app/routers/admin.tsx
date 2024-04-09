@@ -5,15 +5,28 @@ import { UsersPage } from "../../pages/admin/users.page";
 import { CommandsPage } from "../../pages/admin/commands.page";
 import { StatisticsPage } from "../../pages/admin/statistics.page";
 import UsersModify from "../../pages/admin/users_modify.page";
+import { AdminRoute } from ".";
 
 export default function AdminRouter() {
   return (
     <Routes>
-      <Route path="/admin" element={<AdminPage />} />
-      <Route path="/admin/users" element={<UsersPage />} />
-      <Route path="/admin/users_modify" element={<UsersModify />} />
-      <Route path="/admin/commands" element={<CommandsPage />} />
-      <Route path="/admin/statistics" element={<StatisticsPage />} />
+      <Route path="/admin" element={<AdminRoute children={<AdminPage />} />} />
+      <Route
+        path="/admin/users"
+        element={<AdminRoute children={<UsersPage />} />}
+      />
+      <Route
+        path="/admin/users_modify"
+        element={<AdminRoute children={<UsersModify />} />}
+      />
+      <Route
+        path="/admin/commands"
+        element={<AdminRoute children={<CommandsPage />} />}
+      />
+      <Route
+        path="/admin/statistics"
+        element={<AdminRoute children={<StatisticsPage />} />}
+      />
     </Routes>
   );
 }

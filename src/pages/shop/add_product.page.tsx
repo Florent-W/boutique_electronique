@@ -11,8 +11,8 @@ const supabase = createClient(
 );
 
 export default function AddProductPage() {
-  const { user } = useUser();
   const [categoties, setCategories] = useState<Category[]>([]);
+  const { user } = useUser();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

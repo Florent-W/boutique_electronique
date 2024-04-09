@@ -3,6 +3,8 @@ import axios from "axios";
 import { useUser } from "../../app/contexts/user.context";
 import "./account.css";
 import Navbar from "../../components/Navbar";
+import Layout from "../../components/Layout";
+import { createClient } from "@supabase/supabase-js";
 
 interface Order {
   id: string;
@@ -14,6 +16,11 @@ interface Order {
   updatedAt: string;
   product: any[];
 }
+
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL as string,
+  process.env.REACT_APP_SUPABASE_KEY as string
+);
 
 const AccountPage: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -39,13 +46,25 @@ const AccountPage: React.FC = () => {
     fetchOrders();
   }, [userId]);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.reload();
+  };
+
   return (
-    <div>
-      <Navbar />
+    <Layout>
       <div className="account-container">
-        <h2>My Orders</h2>
+        <div className="flex justify-between items-center mb-5 w-full">
+          <h2>Mes commandes</h2>
+          <button
+            className="bg-primary text-white px-5 py-2 rounded-xl"
+            onClick={handleLogout}
+          >
+            Déconnexion
+          </button>
+        </div>
         {orders.length === 0 ? (
-          <p>No orders found</p>
+          <p>Vous n'avez pas encore passé de commande</p>
         ) : (
           <ul>
             {orders.map((order) => (
@@ -65,7 +84,7 @@ const AccountPage: React.FC = () => {
           </ul>
         )}
       </div>
-    </div>
+    </Layout>
   );
 };
 

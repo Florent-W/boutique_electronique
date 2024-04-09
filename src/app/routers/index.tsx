@@ -8,14 +8,33 @@ import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { getUser } from "../../api/users";
+import AuthForm from "../../components/AuthForm";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL as string,
   process.env.REACT_APP_SUPABASE_KEY as string
 );
 
+export function ProtectedRoute({ children }: any) {
+  const { user } = useUser();
+
+  if (!user) return <AuthForm />;
+
+  return children;
+}
+
+export function AdminRoute({ children }: any) {
+  const { user } = useUser();
+
+  if (!user) return <AuthForm />;
+
+  if (user?.role !== "admin") return window.location.replace("/");
+
+  return children;
+}
+
 export default function App() {
-  const { user, updateUser } = useUser();
+  const { updateUser } = useUser();
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }: any) => {
@@ -51,14 +70,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {!user ? (
-        <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
-      ) : (
-        <>
-          <DefaultRouter />
-          <AdminRouter />
-        </>
-      )}
+      <DefaultRouter />
+      <AdminRouter />
     </BrowserRouter>
   );
 }
