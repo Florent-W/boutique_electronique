@@ -1,6 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'remixicon/fonts/remixicon.css';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/Layout';
 
@@ -28,23 +26,28 @@ const cardData = [
 export function AdminPage() {
     return (
       <Layout>
-      <div className="flex flex-wrap justify-around items-start mt-10">
-        {cardData.map((data, index) => (
-          <Link
-            key={index}
-            to={data.link}
-            className="w-full sm:w-5/12 md:w-1/3 lg:w-1/4 xl:w-1/5 p-6 mx-1 my-2 bg-white hover:bg-gray-100 text-black font-bold text-lg rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4"
-          >
-            <div className="text-3xl">
-              <i className={data.icon}></i>
+        <div className="flex justify-center mt-10">
+          <div className="w-full max-w-4xl bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-2xl p-8 mb-10">
+            <h1 className="text-center text-4xl font-bold text-white mb-10">Page d'Administration</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {cardData.map((data, index) => (
+                <Link
+                  key={index}
+                  to={data.link}
+                  className="transform hover:scale-105 transition duration-500 ease-in-out bg-white rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4 p-6 text-black font-bold text-lg hover:shadow-2xl"
+                >
+                  <div className="text-4xl text-blue-600">
+                    <i className={data.icon}></i>
+                  </div>
+                  <div className="text-center">
+                    <p>{data.title}</p>
+                    <p className="text-sm text-gray-600">{data.action}</p>
+                  </div>
+                </Link>
+              ))}
             </div>
-            <div>
-              <p>{data.title}</p>
-              <p className="text-sm">{data.action}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+          </div>
+        </div>
       </Layout>
     );
-  }
+}
