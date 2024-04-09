@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Card,
@@ -10,36 +10,19 @@ import {
   TableRow,
 } from '@tremor/react';
 import 'remixicon/fonts/remixicon.css';
-import { useUser } from '../../app/contexts/user.context';
-import { getProducts } from '../../api/products';
-
-const usersData = [
-  {
-    id: 1,
-    name: "John Doe",
-    region: "The Wildlands",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    region: "Northern Isles",
-    status: "Inactive",
-  },
-  {
-    id: 3,
-    name: "Will Turner",
-    region: "Eastern Kingdoms",
-    status: "Active",
-  },
-];
+import { User, useUser } from '../../app/contexts/user.context';
+import Layout from '../../components/Layout';
+import { getUsers } from '../../api/users';
+import BackButton from '../../components/BackButton';
 
 export const UsersPage = () => {
   const { user } = useUser();
-console.log(user);
-const fetchProducts = async () => {
+  const [usersData, setUsersData] = useState<User[]>([]);
+// console.log(user);
+const fetchUsers = async () => {
   try {
-    const response = await getProducts();
+    const response = await getUsers();
+    setUsersData(response);
     console.log(response);
   } catch (error) {
     console.log(error);
@@ -48,33 +31,37 @@ const fetchProducts = async () => {
 
   const navigate = useNavigate();
 
-  const handleEdit = (userId: number) => {
-    navigate(`/edit-user/${userId}`); 
+  const handleEdit = (userId: string) => {
+    navigate(`/admin/users_modify/${userId}`); 
   };
 
-  const handleDelete = (userId: number) => {
+  const handleDelete = (userId: string) => {
     console.log(`Delete user with ID: ${userId}`);
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
   return (
+    <Layout>
+      <BackButton />
     <div className="mx-auto max-w-2xl">
         <Card>
       <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">Gestion des utilisateurs</h3>
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Name</TableHeaderCell>
-            <TableHeaderCell>Region</TableHeaderCell>
-            <TableHeaderCell>Status</TableHeaderCell>
-            <TableHeaderCell>Actions</TableHeaderCell>
+            <TableHeaderCell>Id</TableHeaderCell>
+            <TableHeaderCell>Email</TableHeaderCell>
+            <TableHeaderCell>Rôle</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {usersData.map((user) => (
             <TableRow key={user.id}>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.region}</TableCell>
-              <TableCell>{user.status}</TableCell>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
               <TableCell>
                 <div className="flex justify-end space-x-2">
                   <button
@@ -97,5 +84,6 @@ const fetchProducts = async () => {
       </Table>
       </Card>
     </div>
+    </Layout>
   );
 };

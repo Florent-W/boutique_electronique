@@ -1,4 +1,6 @@
 import { AreaChart } from '@tremor/react';
+import Layout from '../../components/Layout';
+import BackButton from '../../components/BackButton';
 
 const chartdata = [
   {
@@ -68,6 +70,11 @@ const dataFormatter = (number: number | bigint) =>
 
 export function StatisticsPage() {
   return (
+    <Layout>
+    <BackButton />
+    <div className="text-center mt-4 mb-8">
+        <h1 className="text-2xl font-semibold">Statistiques des ventes</h1>
+      </div>
     <AreaChart
       className="h-80"
       data={chartdata}
@@ -78,5 +85,6 @@ export function StatisticsPage() {
       yAxisWidth={60}
       onValueChange={(v) => console.log(v)}
     />
+    </Layout>
   );
 }

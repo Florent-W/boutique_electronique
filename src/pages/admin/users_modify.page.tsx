@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Layout from '../../components/Layout';
+import BackButton from '../../components/BackButton';
 
 function UsersModify() {
   const [user, setUser] = useState({
@@ -21,6 +23,8 @@ function UsersModify() {
   };
 
   return (
+    <Layout>
+    <BackButton />
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md m-auto">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
@@ -59,6 +63,7 @@ function UsersModify() {
         Save
       </button>
     </form>
+    </Layout>
   );
 }
 

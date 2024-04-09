@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'remixicon/fonts/remixicon.css';
 import { Link } from 'react-router-dom';
+import Layout from '../../components/Layout';
 
 const cardData = [
   {
@@ -26,6 +27,7 @@ const cardData = [
 
 export function AdminPage() {
     return (
+      <Layout>
       <div className="flex flex-wrap justify-around items-start mt-10">
         {cardData.map((data, index) => (
           <Link
@@ -43,5 +45,6 @@ export function AdminPage() {
           </Link>
         ))}
       </div>
+      </Layout>
     );
   }
