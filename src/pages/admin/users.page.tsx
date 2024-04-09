@@ -10,6 +10,8 @@ import {
   TableRow,
 } from '@tremor/react';
 import 'remixicon/fonts/remixicon.css';
+import { useUser } from '../../app/contexts/user.context';
+import { getProducts } from '../../api/products';
 
 const usersData = [
   {
@@ -33,6 +35,17 @@ const usersData = [
 ];
 
 export const UsersPage = () => {
+  const { user } = useUser();
+console.log(user);
+const fetchProducts = async () => {
+  try {
+    const response = await getProducts();
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   const navigate = useNavigate();
 
   const handleEdit = (userId: number) => {
