@@ -28,7 +28,7 @@ export default function ProductsList({
           <Link
             to={`/article/${product.id}`}
             key={product.id}
-            className="rounded-xl shadow-lg relative flex flex-col items-center justify-start group h-full bg-white"
+            className="rounded-xl shadow-lg relative flex flex-col items-center justify-start group h-full bg-white overflow-hidden"
           >
             <img
               src={product.image}
