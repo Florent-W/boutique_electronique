@@ -8,7 +8,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-400 w-full px-[5%]">
-      <div className="flex justify-between items-center p-4 max-w-[1340px] mx-auto">
+      <div className="flex justify-between items-center p-4 max-w-[1200px] mx-auto">
         <Link to="/" className="text-2xl font-bold">
           <img src="/assets/brand/logo.svg" alt="logo" className="h-10" />
         </Link>
