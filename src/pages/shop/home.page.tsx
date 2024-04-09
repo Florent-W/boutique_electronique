@@ -14,7 +14,6 @@ export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const { user } = useUser();
   console.log(user);
-
   const fetchProducts = async () => {
     try {
       const response = await getProducts();
@@ -35,10 +34,8 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    fetchCategories();
     fetchProducts();
   }, []);
-
   return (
     <Layout>
       <div>
