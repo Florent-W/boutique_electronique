@@ -22,7 +22,7 @@ export const UsersPage = () => {
   };
 
   const handleEdit = (userId: string) => {
-    navigate(`/admin/users_modify/${userId}`);
+    navigate(`/admin/user_modify/${userId}`);
   };
 
   const handleDelete = (userId: string) => {
@@ -37,7 +37,7 @@ export const UsersPage = () => {
     <Layout>
       <BackButton />
       <div className="flex justify-center mt-10">
-        <div className="w-full max-w-4xl bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-2xl p-8 mb-10">
+        <div className="w-full max-w-4xl bg-gradient-to-r from-red-800 to-red-500 rounded-xl shadow-2xl p-8 mb-10">
           <h1 className="text-center text-4xl font-bold text-white mb-10">Gestion des utilisateurs</h1>
           <div className="overflow-x-auto bg-white rounded-xl shadow-md">
             <table className="min-w-full leading-normal">

@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import BackButton from '../../components/BackButton';
+import { User, useUser } from '../../app/contexts/user.context';
+import { getUser } from '../../api/users';
+import { useParams } from 'react-router-dom';
 
 function UsersModify() {
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+  const { user } = useUser();
+  const [userData, setUserData] = useState<User>();
+  const { id = ''} = useParams();
+
+  const fetchUser = async () => {
+    try {
+      console.log(id)
+      const response = await getUser(id);
+      setUserData(response);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
+   /* const { name, value } = e.target;
+    setUser((prevUser: any) => ({
       ...prevUser,
       [name]: value,
-    }));
+    })); */
   };
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -22,45 +34,34 @@ function UsersModify() {
     console.log(user); 
   };
 
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <Layout>
     <BackButton />
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md m-auto">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nom</label>
         <input
           type="text"
           name="name"
           id="name"
-          value={user.name}
+          value={user?.email}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={user.email}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
+        <label htmlFor="rôle" className="block text-sm font-medium text-gray-700">Rôle</label>
+        <select name="role" id="role" value={user?.role} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
       </div>
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
-        <input
-          type="tel"
-          name="phone"
-          id="phone"
-          value={user.phone}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
-      <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Save
+      <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+        Modifier
       </button>
     </form>
     </Layout>

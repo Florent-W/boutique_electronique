@@ -13,3 +13,10 @@ export async function getUser(id: string) {
     method: "GET",
   });
 }
+
+export async function deleteUser(id: string) {
+  return await axiosRequest({
+    url: "/user/" + id,
+    method: "DELETE",
+  });
+}
