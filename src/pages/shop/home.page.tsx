@@ -1,21 +1,29 @@
 import { Button } from "@tremor/react";
 import { useUser } from "../../app/contexts/user.context";
+import { Link } from "react-router-dom";
+import { RiAccountCircleLine, RiShoppingCartLine } from "@remixicon/react";
+import Navbar from "../../components/Navbar";
+import { getProducts } from "../../api/products";
+import { useEffect } from "react";
 
 export default function HomePage() {
-  const { user, updateUser } = useUser();
+  const { user } = useUser();
   console.log(user);
+  const fetchProducts = async () => {
+    try {
+      const response = await getProducts();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <div className="">
-      <h1 className="text-3xl font-bold underline text-red-500">
-        Hello world! {user?.role}
-      </h1>
-      <Button
-        onClick={() => {
-          updateUser(null);
-        }}
-      >
-        Click me
-      </Button>
+      <Navbar />
     </div>
   );
 }

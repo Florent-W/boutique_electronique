@@ -13,6 +13,7 @@ const config = {
     current: "currentColor",
     extend: {
       colors: {
+        primary: "#B30909",
         // light mode
         tremor: {
           brand: {
