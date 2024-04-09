@@ -48,7 +48,7 @@ export default function App() {
         <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
       ) : (
         <>
-          <AdminRouter />
+          {/*<AdminRouter />*/}
           <DefaultRouter />
         </>
       )}
