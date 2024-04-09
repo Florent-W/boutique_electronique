@@ -11,7 +11,7 @@ export default function AdminRouter() {
     <Routes>
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/admin/users" element={<UsersPage />} />
-      <Route path="/admin/users_modify" element={<UsersModify />} />
+      <Route path="/admin/user_modify/:id" element={<UsersModify />} />
       <Route path="/admin/commands" element={<CommandsPage />} />
       <Route path="/admin/statistics" element={<StatisticsPage />} />
     </Routes>

@@ -27,7 +27,7 @@ export function AdminPage() {
     return (
       <Layout>
         <div className="flex justify-center mt-10">
-          <div className="w-full max-w-4xl bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-2xl p-8 mb-10">
+          <div className="w-full max-w-4xl bg-gradient-to-r from-red-800 to-red-500 rounded-xl shadow-2xl p-8 mb-10">
             <h1 className="text-center text-4xl font-bold text-white mb-10">Page d'Administration</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {cardData.map((data, index) => (
