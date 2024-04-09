@@ -4,7 +4,7 @@ export type User = {
   token: string;
   id: string;
   email: string;
-  role?: string;
+  role: string;
 };
 
 const UserContext = createContext({
