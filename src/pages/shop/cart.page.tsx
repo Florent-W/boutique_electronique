@@ -27,7 +27,6 @@ const CartPage: React.FC = () => {
             <h2>{cartItems[itemId].name}</h2>
             <p>Description: {cartItems[itemId].description}</p>
             <p>Price: {cartItems[itemId].price}</p>
-            <p>Quantity: {cartItems[itemId].quantity}</p>
           </li>
         ))}
       </ul>
