@@ -4,11 +4,15 @@ import { Order, useOrder } from '../../app/contexts/order.context';
 import { getOrders } from '../../api/order';
 import Layout from '../../components/Layout';
 import BackButton from '../../components/BackButton';
+import moment from 'moment-timezone';
+import 'moment/locale/fr';
 
 export const CommandsPage = () => {
   const navigate = useNavigate();
   const { order } = useOrder();
   const [ordersData, setOrdersData] = useState<Order[]>([]);
+
+  moment.locale('fr');
 
   const fetchOrders = async () => {
     try {
@@ -28,6 +32,10 @@ export const CommandsPage = () => {
     console.log(`Delete command with ID: ${commandId}`);
   };
 
+  const formatDate = (dateString: moment.MomentInput) => {
+    return moment(dateString).tz('UTC').format('D MMMM YYYY à HH:mm:ss');
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -36,7 +44,7 @@ export const CommandsPage = () => {
     <Layout>
       <BackButton />
       <div className="flex justify-center mt-10">
-        <div className="w-full max-w-4xl bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-2xl p-8 mb-10">
+        <div className="w-full max-w-4xl bg-gradient-to-r from-red-800 to-red-500 rounded-xl shadow-2xl p-8 mb-10">
           <h1 className="text-center text-4xl font-bold text-white mb-10">Gestion des commandes</h1>
           <div className="bg-white p-6 rounded-xl shadow-md">
             <div className="overflow-x-auto">
@@ -54,7 +62,7 @@ export const CommandsPage = () => {
                   {ordersData.map((order) => (
                     <tr key={order.id}>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{order.id}</td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{order.date}</td>
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{formatDate(order.date)}</td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{order.totalAmount}</td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">{order.status}</td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex justify-end items-center">
