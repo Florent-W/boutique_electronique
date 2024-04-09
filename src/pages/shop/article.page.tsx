@@ -44,7 +44,6 @@ const ArticlePage: React.FC = () => {
           {product.image && <img src={product.image} alt={product.name} />}
           <p>Category ID: {product.categoryId}</p>
           <p>Created At: {product.createdAt}</p>
-          <p>Updated At: {product.updatedAt}</p>
           <button className="add-to-cart-btn" onClick={addToCart}>Add to Cart</button>
         </div>
       ) : (
