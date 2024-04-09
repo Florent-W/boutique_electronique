@@ -3,10 +3,8 @@ import Navbar from '../../components/Navbar';
 import './cart.css';
 
 const CartPage: React.FC = () => {
-  // Récupère le panier depuis le localStorage
   const cartItems: { [key: string]: any } = JSON.parse(localStorage.getItem('cart') || '{}');
 
-  // Calcule le total en parcourant tous les articles dans le panier
   const total = Object.values(cartItems).reduce((acc: number, currentItem: any) => {
     return acc + currentItem.price;
   }, 0);
@@ -30,7 +28,7 @@ const CartPage: React.FC = () => {
           </li>
         ))}
       </ul>
-      <p className="total">Total: {total}</p> {/* Affiche le total */}
+      <p className="total">Total: {total}</p>
     </div>
   )}
 </div>
