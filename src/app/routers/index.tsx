@@ -44,9 +44,10 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {!user && (
+      {!user ? (
+        <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
+      ) : (
         <>
-          <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
           <AdminRouter />
           <DefaultRouter />
         </>
