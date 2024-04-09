@@ -33,6 +33,21 @@ const ArticlePage: React.FC = () => {
     fetchProduct();
   }, [id]);
 
+  const addToCart = () => {
+    if (product) {
+      // Récupère le panier existant depuis le localStorage
+      const existingCart: Product[] = JSON.parse(localStorage.getItem('cart') || '[]');
+  
+      // Ajoute le produit actuel au panier
+      const updatedCart = [...existingCart, product];
+  
+      // Met à jour le panier dans le localStorage
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      alert('Article ajouté au panier !');
+    }
+  };
+  
+
   return (
     <div>
       {product ? (
@@ -40,13 +55,12 @@ const ArticlePage: React.FC = () => {
           <h1>{product.name}</h1>
           <p>{product.description}</p>
           <p>Price: {product.price}</p>
-          <p>Stock: {product.stock}</p>
           <p>Seller ID: {product.sellerId}</p>
           {product.image && <img src={product.image} alt={product.name} />}
           <p>Category ID: {product.categoryId}</p>
           <p>Created At: {product.createdAt}</p>
           <p>Updated At: {product.updatedAt}</p>
-          {/* Ajoute d'autres éléments selon les besoins */}
+          <button onClick={addToCart}>Add to Cart</button> {/* Ajoute le bouton pour ajouter au panier */}
         </div>
       ) : (
         <p>Loading...</p>
