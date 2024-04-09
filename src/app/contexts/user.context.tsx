@@ -1,21 +1,21 @@
 import React, { createContext, useState, useContext } from "react";
 
-type User = {
+export type User = {
+  token: string;
   id: string;
-  name: string;
   email: string;
-  role?: "admin" | "user";
+  role?: string;
 };
 
 const UserContext = createContext({
   user: null as User | null,
-  updateUser: (userData: User) => {},
+  updateUser: (userData: User | null) => {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState(null as User | null);
 
-  const updateUser = (userData: User) => {
+  const updateUser = (userData: User | null) => {
     setUser(userData);
   };
 
