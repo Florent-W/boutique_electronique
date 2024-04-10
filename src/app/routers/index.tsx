@@ -45,6 +45,7 @@ export default function App() {
       updateUser({
         token: session?.access_token,
         id: session?.user?.id,
+        userId: userinfo?.userId,
         firstName: userinfo?.firstName,
         lastName: userinfo?.lastName,
         email: session?.user?.email,
@@ -62,6 +63,7 @@ export default function App() {
       updateUser({
         token: session?.access_token,
         id: session?.user?.id,
+        userId: userinfo?.userId,
         firstName: userinfo?.firstName,
         lastName: userinfo?.lastName,
         email: session?.user?.email,

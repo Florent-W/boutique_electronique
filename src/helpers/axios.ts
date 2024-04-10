@@ -5,7 +5,7 @@ axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 type AxiosParams = {
   url: string;
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   data?: any;
   headers?: any;
 };

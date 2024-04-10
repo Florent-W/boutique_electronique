@@ -1,3 +1,4 @@
+import { User } from "../app/contexts/user.context";
 import { axiosRequest } from "../helpers/axios";
 
 export async function getUsers() {
@@ -14,7 +15,18 @@ export async function getUser(id: string) {
   });
 }
 
-export async function deleteUser(id: string) {
+export async function updateUser(id: string, data: User, token: string) {
+  return await axiosRequest({
+    url: "/user/" + id,
+    method: "PATCH",
+    data,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function deleteUser(id: string, token: string) {
   return await axiosRequest({
     url: "/user/" + id,
     method: "DELETE",
