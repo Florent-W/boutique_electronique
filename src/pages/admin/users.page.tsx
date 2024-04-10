@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import 'remixicon/fonts/remixicon.css';
 import { User, useUser } from '../../app/contexts/user.context';
 import Layout from '../../components/Layout';
-import { getUsers } from '../../api/users';
+import { deleteUser, getUsers } from '../../api/users';
 import BackButton from '../../components/BackButton';
 
 export const UsersPage = () => {
@@ -25,9 +25,21 @@ export const UsersPage = () => {
     navigate(`/admin/user_modify/${userId}`);
   };
 
-  const handleDelete = (userId: string) => {
-    console.log(`Delete user with ID: ${userId}`);
-  };
+const handleDelete = async (userId: string) => {
+  try {
+    const userToDelete = usersData.find(user => user.userId === userId);
+    if (userToDelete) {
+    await deleteUser(userToDelete?.id, user?.token || '');
+    console.log(`User with ID: ${userId} deleted successfully.`);
+    
+      setUsersData(usersData.filter(user => user.id !== userId));
+      await fetchUsers();
+    }
+  } catch (error) {
+    console.error(`Error deleting user with ID: ${userId}`, error);
+  }
+};
+
 
   useEffect(() => {
     fetchUsers();
@@ -83,13 +95,13 @@ export const UsersPage = () => {
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex items-center">
                       <button
-                        onClick={() => handleEdit(user.id)}
+                        onClick={() => handleEdit(user.userId)}
                         className="text-indigo-600 hover:text-indigo-900 mx-2"
                       >
                         <i className="ri-pencil-line"></i>
                       </button>
                       <button
-                        onClick={() => handleDelete(user.id)}
+                        onClick={() => handleDelete(user.userId)}
                         className="text-red-600 hover:text-red-900 mx-2"
                       >
                         <i className="ri-delete-bin-line"></i>
