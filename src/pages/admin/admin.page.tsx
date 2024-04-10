@@ -36,7 +36,7 @@ export function AdminPage() {
                   to={data.link}
                   className="transform hover:scale-105 transition duration-500 ease-in-out bg-white rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4 p-6 text-black font-bold text-lg hover:shadow-2xl"
                 >
-                  <div className="text-4xl text-blue-600">
+                  <div className="text-4xl text-red-700">
                     <i className={data.icon}></i>
                   </div>
                   <div className="text-center">
