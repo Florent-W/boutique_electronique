@@ -12,10 +12,13 @@ const supabase = createClient(
 
 export default function AddProductPage() {
   const [categoties, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const { user } = useUser();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
     const formData = new FormData(e.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
 
@@ -47,8 +50,12 @@ export default function AddProductPage() {
       );
 
       console.log(product);
+
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -121,7 +128,7 @@ export default function AddProductPage() {
             type="submit"
             className="bg-primary text-white rounded-lg px-5 py-3 text-lg"
           >
-            Publier le produit
+            {loading ? "Chargement..." : "Vendre un produit"}
           </button>
         </form>
       </div>
