@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'remixicon/fonts/remixicon.css';
-import { User, useUser } from '../../app/contexts/user.context';
-import Layout from '../../components/Layout';
-import { getUsers } from '../../api/users';
-import BackButton from '../../components/BackButton';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "remixicon/fonts/remixicon.css";
+import { User, useUser } from "../../app/contexts/user.context";
+import Layout from "../../components/Layout";
+import { getUsers } from "../../api/users";
+import BackButton from "../../components/BackButton";
 
 export const UsersPage = () => {
   const { user } = useUser();
@@ -38,7 +38,9 @@ export const UsersPage = () => {
       <BackButton />
       <div className="flex justify-center mt-10">
         <div className="w-full max-w-4xl bg-gradient-to-r from-red-800 to-red-500 rounded-xl shadow-2xl p-8 mb-10">
-          <h1 className="text-center text-4xl font-bold text-white mb-10">Gestion des utilisateurs</h1>
+          <h1 className="text-center text-4xl font-bold text-white mb-10">
+            Gestion des utilisateurs
+          </h1>
           <div className="overflow-x-auto bg-white rounded-xl shadow-md">
             <table className="min-w-full leading-normal">
               <thead>

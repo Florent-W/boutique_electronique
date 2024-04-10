@@ -45,17 +45,17 @@ export default function CheckoutForm() {
       return;
     }
 
-    setIsProcessing(false);
+    setIsProcessing(true);
 
-    // const order = await createOrder(
-    //   {
-    //     userId: user?.id as string,
-    //     product: getProductsIdInCart(),
-    //     totalAmount: getAmount(),
-    //     status: "pending",
-    //   },
-    //   user?.token as string
-    // );
+    await createOrder(
+      {
+        userId: user?.id as string,
+        product: getProductsIdInCart(),
+        totalAmount: getAmount(),
+        status: "pending",
+      },
+      user?.token as string
+    );
 
     const { error } = await stripe.confirmPayment({
       elements,

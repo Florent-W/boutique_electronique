@@ -12,6 +12,8 @@ const stripePromise = loadStripe(
 
 export default function PaymentPage() {
   const [clientSecret, setClientSecret] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
   const { user } = useUser();
 
   const calculateCartTotal = () => {
@@ -39,6 +41,8 @@ export default function PaymentPage() {
       setClientSecret(response.client_secret);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading((_prev) => false);
     }
   };
 
