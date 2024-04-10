@@ -26,27 +26,27 @@ export function StatisticsPage() {
 
   const prepareChartData = (orders: Order[]) => {
     const salesData: Record<string, number> = {};
-
+  
     orders.forEach(order => {
-      // Formatte la date pour n'inclure que le mois et l'année
       const date = new Date(order.date);
-      const monthYear = date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' });
-
+      // Utilisez le format ISO 8601 pour le mois et l'année (YYYY-MM), ce qui facilite le tri.
+      const monthYearISO = date.toISOString().slice(0, 7);
+  
       const amount = typeof order.totalAmount === 'number' ? order.totalAmount : 0;
-      salesData[monthYear] = (salesData[monthYear] || 0) + amount;
+      salesData[monthYearISO] = (salesData[monthYearISO] || 0) + amount;
     });
-
-    // Convertit l'objet salesData en tableau pour le graphique, en triant par date
-    return Object.entries(salesData).sort((a, b) => {
-      // Transforme le format "mois année" en une date pour le tri
-      const dateA = new Date(a[0] + " 1");
-      const dateB = new Date(b[0] + " 1");
-      return dateA.getTime() - dateB.getTime();
-    }).map(([date, totalAmount]) => ({
-      date,
-      Ventes: totalAmount,
-    }));
-  };
+  
+    // Convertit et trie les données. La conversion en date est maintenant uniforme et interprétable.
+    return Object.entries(salesData).sort((a, b) => a[0].localeCompare(b[0])).map(([monthYearISO, totalAmount]) => {
+      const date = new Date(monthYearISO);
+      // Reconvertit le format ISO en format lisible "mois année" pour l'affichage
+      const monthYear = date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' });
+      return {
+        date: monthYear,
+        Ventes: totalAmount,
+      };
+    });
+  };  
 
   const dynamicChartData = prepareChartData(ordersData);
 

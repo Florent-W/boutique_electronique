@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Order, useOrder } from "../../app/contexts/order.context";
-import { getOrders } from "../../api/order";
+import { deleteOrder, getOrders } from "../../api/order";
 import Layout from "../../components/Layout";
 import BackButton from "../../components/BackButton";
 import moment from "moment-timezone";
@@ -25,11 +25,22 @@ export const CommandsPage = () => {
   };
 
   const handleEdit = (commandId: string) => {
-    navigate(`/edit-commands/${commandId}`);
+    navigate(`/admin/command_modify/${commandId}`);
   };
 
-  const handleDelete = (commandId: string) => {
-    console.log(`Delete command with ID: ${commandId}`);
+  const handleDelete = async (commandId: string) => {
+    try {
+      const orderToDelete = ordersData.find(order => order.id === commandId);
+      if (orderToDelete) {
+      await deleteOrder(orderToDelete?.id);
+      console.log(`Delete command with ID: ${commandId}`);
+      
+       // setUsersData(usersData.filter(user => user.id !== userId));
+        await fetchOrders();
+      }
+    } catch (error) {
+      console.error(`Error deleting user with ID: ${commandId}`, error);
+    }
   };
 
   const formatDate = (dateString: moment.MomentInput) => {
@@ -66,8 +77,8 @@ export const CommandsPage = () => {
                       Statut
                     </th>
                     <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-tr-xl">
-                      Actions
-                    </th>
+                    Actions
+                  </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -85,7 +96,7 @@ export const CommandsPage = () => {
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         {order.status}
                       </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex justify-end items-center">
+                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <button
                           onClick={() => handleEdit(order.id)}
                           className="text-indigo-600 hover:text-indigo-900 mx-2"
