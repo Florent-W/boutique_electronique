@@ -8,6 +8,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
 dayjs.extend(relativeTime);
 dayjs.locale("fr");
+
 const ArticlePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<any>(null);
