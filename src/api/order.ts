@@ -25,3 +25,13 @@ export async function createOrder(
     },
   });
 }
+
+export async function completeOrder(orderId: string) {
+  return await axiosRequest({
+    url: `/order/commetuveux/${orderId}`,
+    method: "PATCH",
+    data: {
+      status: "completed",
+    },
+  });
+}

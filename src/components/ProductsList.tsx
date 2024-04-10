@@ -24,23 +24,25 @@ export default function ProductsList({
         </Link>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-        {products.map((product: Product) => (
-          <Link
-            to={`/article/${product.id}`}
-            key={product.id}
-            className="rounded-xl shadow-lg relative flex flex-col items-center justify-start group h-full bg-white overflow-hidden"
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="min-h-[200px] h-full max-h-[200px] w-full object-cover"
-            />
-            <div className="p-5">
-              <p className="text-lg font-semibold mt-2">{product.name}</p>
-              <p className="text-gray-500">{product.price} €</p>
-            </div>
-          </Link>
-        ))}
+        {products
+          .filter((product: Product) => product.status === 1)
+          .map((product: Product) => (
+            <Link
+              to={`/article/${product.id}`}
+              key={product.id}
+              className="rounded-xl shadow-lg relative flex flex-col items-center justify-start group h-full bg-white overflow-hidden"
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="min-h-[200px] h-full max-h-[200px] w-full object-cover"
+              />
+              <div className="p-5">
+                <p className="text-lg font-semibold mt-2">{product.name}</p>
+                <p className="text-gray-500">{product.price} €</p>
+              </div>
+            </Link>
+          ))}
       </div>
     </div>
   );

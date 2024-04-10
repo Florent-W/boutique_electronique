@@ -8,6 +8,7 @@ import { Product } from "../../api/products";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/fr";
+import formatPrice from "../../helpers/formatPrice";
 dayjs.extend(relativeTime);
 dayjs.locale("fr");
 
@@ -33,25 +34,24 @@ const AccountPage: React.FC = () => {
   const { user } = useUser();
   const userId = user?.id;
   useEffect(() => {
-
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/api/product/user`,
-        { headers: { Authorization: `Bearer ${user?.token}` }}
-      );
-      setProducts(response.data);
-      console.log(response.data)
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/product/user`,
+          { headers: { Authorization: `Bearer ${user?.token}` } }
+        );
+        setProducts(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
 
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
           `http://localhost:4000/api/order/user`,
-          { headers: { Authorization: `Bearer ${user?.token}` }}
+          { headers: { Authorization: `Bearer ${user?.token}` } }
         );
         setOrders(response.data);
       } catch (error) {
@@ -87,13 +87,25 @@ const AccountPage: React.FC = () => {
           <ul>
             {orders.map((order) => (
               <li key={order.id}>
-                <p className="order-info">Date: {dayjs(order.createdAt).fromNow()}</p>
+                <p className="order-info">
+                  Date: {dayjs(order.createdAt).fromNow()}
+                </p>
                 <p className="order-info">Status: {order.status}</p>
-                <p className="order-info">Total Amount: {order.totalAmount}</p>
+                <p className="order-info">
+                  Total: {formatPrice(order.totalAmount)}
+                </p>
                 <ul className="product-list">
                   {order.product.map((product, index) => (
-                    <li key={index}>
-                      <p>{product.name}</p>
+                    <li key={index} className="flex items-center gap-2">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-[50px] h-[50px] object-cover rounded-xl shadow-lg"
+                      />
+                      <div>
+                        <p>{product.name}</p>
+                        <p>{formatPrice(product.price)}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -102,26 +114,29 @@ const AccountPage: React.FC = () => {
           </ul>
         )}
 
-{products.length === 0 ? (
+        <h2 className="mt-10 mb-5">Mes articles</h2>
+        {products.length === 0 ? (
           <p>Vous n'avez pas encore déposé d'article</p>
         ) : (
           <ul>
             {products.map((product) => (
               <li key={product.id}>
                 <a
-            href={product.image}
-            className="text-primary"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-[200px] object-cover rounded-xl shadow-lg"
-            />
-          </a>
+                  href={product.image}
+                  className="text-primary"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-[200px] object-cover rounded-xl shadow-lg"
+                  />
+                </a>
                 <p className="order-info">Name: {product.name}</p>
-                <p className="order-info">Date: {dayjs(product.createdAt).fromNow()}</p>
+                <p className="order-info">
+                  Date: {dayjs(product.createdAt).fromNow()}
+                </p>
                 <p className="order-info">Amount: {product.price}</p>
               </li>
             ))}

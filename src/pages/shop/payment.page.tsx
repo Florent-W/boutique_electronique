@@ -54,6 +54,8 @@ export default function PaymentPage() {
 
       console.log(order);
 
+      localStorage.setItem("order", JSON.stringify(order) as string);
+
       const response = await createPayment(
         calculateCartTotal() * 100,
         user?.token as string,
