@@ -16,7 +16,7 @@ export default function AdminRouter() {
         element={<AdminRoute children={<UsersPage />} />}
       />
       <Route
-        path="/admin/users_modify"
+        path="/admin/user_modify/:id"
         element={<AdminRoute children={<UsersModify />} />}
       />
       <Route

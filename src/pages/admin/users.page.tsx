@@ -50,6 +50,12 @@ export const UsersPage = () => {
                     Email
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Prénom
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Nom
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Rôle
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider rounded-tr-xl">
@@ -58,7 +64,7 @@ export const UsersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {usersData.map((user) => (
+                {usersData.sort((a, b) => parseInt(a.id) - parseInt(b.id)).map((user) => (
                   <tr key={user.id}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {user.id}
@@ -67,9 +73,15 @@ export const UsersPage = () => {
                       {user.email}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      {user.firstName}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      {user.lastName}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       {user.role}
                     </td>
-                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex justify-end items-center">
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex items-center">
                       <button
                         onClick={() => handleEdit(user.id)}
                         className="text-indigo-600 hover:text-indigo-900 mx-2"
