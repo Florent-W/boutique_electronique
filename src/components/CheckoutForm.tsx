@@ -12,30 +12,6 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState(null as string | null);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // une fonction qui va récupérer les produits dans le panier et faire un tableau avec les id de chaque produit (ex: product.id)
-  const getProductsIdInCart = () => {
-    const cart = localStorage.getItem("cart");
-    if (cart) {
-      const cartItems = JSON.parse(cart);
-      return Object.values(cartItems).map((item: any) => item.id);
-    }
-    return [];
-  };
-
-  const getAmount = () => {
-    const cart = localStorage.getItem("cart");
-    if (cart) {
-      const cartItems = JSON.parse(cart);
-      return Object.values(cartItems).reduce(
-        (acc: number, currentItem: any) => {
-          return acc + currentItem.price;
-        },
-        0
-      );
-    }
-    return 0;
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -45,17 +21,7 @@ export default function CheckoutForm() {
       return;
     }
 
-    setIsProcessing(false);
-
-    // const order = await createOrder(
-    //   {
-    //     userId: user?.id as string,
-    //     product: getProductsIdInCart(),
-    //     totalAmount: getAmount(),
-    //     status: "pending",
-    //   },
-    //   user?.token as string
-    // );
+    setIsProcessing(true);
 
     const { error } = await stripe.confirmPayment({
       elements,

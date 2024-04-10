@@ -3,6 +3,7 @@ import { axiosRequest } from "../helpers/axios";
 export async function createPayment(
   amount: number,
   token: string,
+  orderId: string,
   userId: string
 ) {
   return await axiosRequest({
@@ -14,6 +15,7 @@ export async function createPayment(
     data: {
       amount,
       userId,
+      orderId,
     },
   });
 }

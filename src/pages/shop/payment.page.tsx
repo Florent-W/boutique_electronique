@@ -5,6 +5,7 @@ import { useUser } from "../../app/contexts/user.context";
 import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../components/CheckoutForm";
+import { createOrder } from "../../api/order";
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLIC_KEY as string
@@ -12,7 +13,18 @@ const stripePromise = loadStripe(
 
 export default function PaymentPage() {
   const [clientSecret, setClientSecret] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
   const { user } = useUser();
+
+  const getProductsIdInCart = () => {
+    const cart = localStorage.getItem("cart");
+    if (cart) {
+      const cartItems = JSON.parse(cart);
+      return Object.values(cartItems).map((item: any) => item.id);
+    }
+    return [];
+  };
 
   const calculateCartTotal = () => {
     const cart = localStorage.getItem("cart");
@@ -30,15 +42,30 @@ export default function PaymentPage() {
 
   const fetchPaymentIntent = async () => {
     try {
+      const order = await createOrder(
+        {
+          userId: user?.id as string,
+          product: getProductsIdInCart(),
+          totalAmount: calculateCartTotal(),
+          status: "pending",
+        },
+        user?.token as string
+      );
+
+      console.log(order);
+
       const response = await createPayment(
         calculateCartTotal() * 100,
         user?.token as string,
+        order.id as string,
         user?.id as string
       );
 
       setClientSecret(response.client_secret);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading((_prev) => false);
     }
   };
 
